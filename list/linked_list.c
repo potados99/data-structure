@@ -7,25 +7,66 @@
 //
 
 #include "linked_list.h"
+#include "error.h"
+#include "literal.h"
 
 #pragma mark - Node functions
 
-Node *find_last_node(List *list) {
-	Node *currentNode = (Node *)malloc(sizeof(Node));
-	currentNode = list->head;
+Node *create_node(element value, Node *next) {
+    Node *newNode = (Node *)malloc(sizeof(Node));
+ 
+    newNode->data = value;
+    newNode->nextNode = next;
     
-	while (currentNode->nextNode != NULL)
-		currentNode = currentNode->nextNode;
-	
+    return newNode;
+}
+
+Node *find_node(List *list, int index) {
+    if (isEmpty(list)) {
+        error(indexOut);
+        /* When length is 0 */
+    }
+    
+    int length = len_list(list);
+    int wantedIndex = 0;
+
+    if (index < 0) {
+        if ((index * -1) > length)
+            error(indexOut);
+        wantedIndex = length + index;
+    }
+    else {
+        if (index > length - 1)
+            error(indexOut);
+        wantedIndex = index;
+    }
+    /* Check if index overs range */
+
+    int currentIndex = 0;
+    Node *currentNode = list->head;
+    /* When length is 1 */
+    
+    while (currentIndex < wantedIndex) {
+            currentNode = currentNode->nextNode;
+            currentIndex ++;
+            /* When length is bigger than 1 */
+    }
+    
     return currentNode;
 }
 
-Node *create_node(element value, Node *next) {
-	Node *newNode = (Node *)malloc(sizeof(Node));
-	newNode->data = value;
-	newNode->nextNode = next;
+Node *find_last_node(List *list) {
+    if (isEmpty(list))
+        return NULL;
+    
+	Node *currentNode = (Node *)malloc(sizeof(Node));
 
-    return newNode;
+    currentNode = list->head;
+    
+    while (currentNode->nextNode != NULL)
+        currentNode = currentNode->nextNode;
+    
+    return currentNode;
 }
 
 
@@ -36,46 +77,61 @@ void init_list(List *list) {
 }
 
 void append_list(List *list, element value) {
-    Node *newNode = (Node *)malloc(sizeof(Node));
-	Node *lastNode = (Node *)malloc(sizeof(Node));
-    newNode = create_node(value, NULL);
+    Node *newNode = create_node(value, NULL);
 
-	if (list->head == NULL) {
+	if (isEmpty(list)) {
 		list->head = newNode;
-	} else {	
-		lastNode = find_last_node(list);
+	} else {
+        Node *lastNode = find_last_node(list);
 		lastNode->nextNode = newNode;
 	}
 }
 
-void display_list(List *list) {
-	Node *currentNode = (Node *)malloc(sizeof(Node));
-	currentNode = list->head;
-    
-	while (currentNode != NULL) {
-		printf("%d ", currentNode->data);
-		currentNode = currentNode->nextNode;
-	}
+void insert_list(List *list, int index, element value) {
+    Node *oldNode = find_node(list, index);
+    Node *newNode = create_node(value, oldNode->nextNode);
+
+    oldNode->nextNode = newNode;
+}
+
+void print_list(List *list) {
+	Node *currentNode = list->head;
+
+    printf("[");
+    if (! isEmpty(list)) {
+        while (currentNode->nextNode != NULL) {
+            printf("%d, ", currentNode->data);
+            currentNode = currentNode->nextNode;
+        }
+        printf("%d", currentNode->data);
+    }
+    printf("]\n");
 }
 
 
-int main() {
+#pragma mark - List functions
 
-	List myList;
+int isEmpty(List *list) {
+    return (list->head == NULL);
+}
 
-	init_list(&myList);
+int get_value(List *list, int index) {
+    Node *node = find_node(list, index);
 
-	int input = 0;
-	printf("input integer: ");
-	scanf("%d", &input);
-	while (input != 0) {
-		append_list(&myList, input);
-		
-		printf("input integer: ");
-		scanf("%d", &input);		
-	}
+    return node->data;
+}
 
-	display_list(&myList);
-	printf("\n");
+int len_list(List *list) {
+    if (isEmpty(list))
+        return 0;
+    
+    Node *currentNode = list->head;
+    int currentIndex = 1;
 
+    while (currentNode->nextNode != NULL) {
+        currentNode = currentNode->nextNode;
+        currentIndex ++;
+    }
+    
+    return currentIndex;
 }

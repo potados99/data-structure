@@ -31,15 +31,23 @@ typedef struct List {
 
 #pragma mark - Node functions
 
-Node *find_last_node(List *list);
 Node *create_node(element value, Node *next);
+Node *find_node(List *list, int index);
+Node *find_last_node(List *list);
 
 
 #pragma mark - List methods
 
 void init_list(List *list);
 void append_list(List *list, element value);
-void display_list(List *list);
+void insert_list(List *list, int index, element value);
+void print_list(List *list);
 
+
+#pragma mark - List functions
+
+int isEmpty(List *list);
+int get_value(List *list, int index);
+int len_list(List *list);
 
 #endif /* linked_list_h */
