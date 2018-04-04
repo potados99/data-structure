@@ -14,10 +14,10 @@
 
 Node *create_node(element value, Node *next) {
     Node *newNode = (Node *)malloc(sizeof(Node));
- 
+
     newNode->data = value;
     newNode->nextNode = next;
-    
+
     return newNode;
 }
 
@@ -26,7 +26,7 @@ Node *find_node(List *list, int index) {
         error(indexOut);
         /* When length is 0 */
     }
-    
+
     int length = len_list(list);
     int wantedIndex = 0;
 
@@ -45,27 +45,29 @@ Node *find_node(List *list, int index) {
     int currentIndex = 0;
     Node *currentNode = list->head;
     /* When length is 1 */
-    
+
     while (currentIndex < wantedIndex) {
             currentNode = currentNode->nextNode;
             currentIndex ++;
+            if (currentNode == NULL)
+                error(nodeEmpty);
             /* When length is bigger than 1 */
     }
-    
+
     return currentNode;
 }
 
 Node *find_last_node(List *list) {
     if (isEmpty(list))
-        return NULL;
-    
+        error(indexOut);
+
 	Node *currentNode = (Node *)malloc(sizeof(Node));
 
     currentNode = list->head;
-    
+
     while (currentNode->nextNode != NULL)
         currentNode = currentNode->nextNode;
-    
+
     return currentNode;
 }
 
@@ -124,7 +126,7 @@ int get_value(List *list, int index) {
 int len_list(List *list) {
     if (isEmpty(list))
         return 0;
-    
+
     Node *currentNode = list->head;
     int currentIndex = 1;
 
@@ -132,6 +134,6 @@ int len_list(List *list) {
         currentNode = currentNode->nextNode;
         currentIndex ++;
     }
-    
+
     return currentIndex;
 }
