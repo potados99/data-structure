@@ -1,0 +1,18 @@
+//
+//  linked_list_test.h
+//  data-structure
+//
+//  Created by MacBoogy on 2018. 4. 4..
+//  Copyright © 2018년 MacBoogy. All rights reserved.
+//
+
+#ifndef linked_list_test_h
+#define linked_list_test_h
+
+#include <stdio.h>
+
+void append_test(void);
+void insert_test(void);
+void get_test(void);
+
+#endif /* linked_list_test_h */
