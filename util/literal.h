@@ -12,5 +12,6 @@
 #include <stdio.h>
 
 extern char *indexOut;
+extern char *nodeEmpty;
 
 #endif /* literal_h */
