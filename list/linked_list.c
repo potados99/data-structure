@@ -22,21 +22,18 @@ Node *create_node(element value, Node *next) {
 }
 
 Node *find_node(List *list, int index) {
-    if (isEmpty(list)) {
+    if (isEmpty(list))
         error(listEmpty);
-    }
     
-    int safeIndex = get_safe_index(list, index);
-    int currentIndex = 0;
     Node *currentNode = list->head;
-    /* When length is 1 */
+    int currentIndex = 0;
+    int safeIndex = get_safe_index(list, index);
 
     while (currentIndex < safeIndex) {
             currentNode = currentNode->nextNode;
             currentIndex ++;
             if (currentNode == NULL)
                 error(nodeEmpty);
-            /* When length is bigger than 1 */
     }
 
     return currentNode;
@@ -45,7 +42,7 @@ Node *find_node(List *list, int index) {
 Node *find_last_node(List *list) {
     if (isEmpty(list))
         error(indexOut);
-
+    
 	Node *currentNode = (Node *)malloc(sizeof(Node));
 
     currentNode = list->head;
@@ -61,24 +58,36 @@ Node *find_last_node(List *list) {
 
 void init_list(List *list) {
     list->head = NULL;
+    return;
 }
 
 void append_list(List *list, element value) {
-    Node *newNode = create_node(value, NULL);
-
 	if (isEmpty(list)) {
-		list->head = newNode;
-	} else {
-        Node *lastNode = find_last_node(list);
-		lastNode->nextNode = newNode;
-	}
+		list->head = create_node(value, NULL);
+        return;
+    }
+    
+    Node *lastNode = find_last_node(list);
+    Node *newNode = create_node(value, NULL);
+    
+    lastNode->nextNode = newNode;
+    return;
 }
 
 void insert_list(List *list, int index, element value) {
-    Node *oldNode = find_node(list, index);
+    if (isEmpty(list))
+        error(listEmpty);
+    
+    if (index == 0) {
+        list->head = create_node(value, list->head);
+        return;
+    }
+    
+    Node *oldNode = find_node(list, index - 1);
     Node *newNode = create_node(value, oldNode->nextNode);
 
     oldNode->nextNode = newNode;
+    return;
 }
 
 element pop_list(List *list, int index) {
@@ -111,19 +120,22 @@ element pop_list(List *list, int index) {
     return value;
 }
 
-
 void print_list(List *list) {
+    if (isEmpty(list)) {
+        printf("[]\n");
+        return;
+    }
+    
 	Node *currentNode = list->head;
 
     printf("[");
-    if (! isEmpty(list)) {
-        while (currentNode->nextNode != NULL) {
-            printf("%d, ", currentNode->data);
-            currentNode = currentNode->nextNode;
-        }
-        printf("%d", currentNode->data);
+    while (currentNode->nextNode != NULL) {
+        printf("%d, ", currentNode->data);
+        currentNode = currentNode->nextNode;
     }
+    printf("%d", currentNode->data);
     printf("]\n");
+    return;
 }
 
 
@@ -141,8 +153,7 @@ int get_safe_index(List *list, int index) {
         if ((index * -1) > length)
             error(indexOut);
         safeIndex = length + index;
-    }
-    else {
+    } else {
         if (index > length - 1)
             error(indexOut);
         safeIndex = index;

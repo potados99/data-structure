@@ -34,13 +34,27 @@ void insert_test() {
     
     init_list(&myList);
     
-    int input = 0;
+    int val = 0;
     printf("insert test\n");
     printf("input integer: ");
-    scanf("%d", &input);
-    while (input != -99) {
-        append_list(&myList, input);
+    scanf("%d", &val);
+    while (val != -99) {
+        append_list(&myList, val);
         
+        printf("input integer: ");
+        scanf("%d", &val);
+    }
+    
+    print_list(&myList);
+    
+    int input = 0;
+    printf("input integer: ");
+    scanf("%d", &input);
+    int num = 100;
+    while (input != -99) {
+        insert_list(&myList, input, num ++);
+        print_list(&myList);
+
         printf("input integer: ");
         scanf("%d", &input);
     }
