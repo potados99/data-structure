@@ -13,6 +13,7 @@
 
 void append_test(void);
 void insert_test(void);
-void get_test(void);
+void pop_test(void);
+void get_value_test(void);
 
 #endif /* linked_list_test_h */

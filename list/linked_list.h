@@ -41,13 +41,15 @@ Node *find_last_node(List *list);
 void init_list(List *list);
 void append_list(List *list, element value);
 void insert_list(List *list, int index, element value);
+element pop_list(List *list, int index);
 void print_list(List *list);
 
 
 #pragma mark - List functions
 
 int isEmpty(List *list);
-int get_value(List *list, int index);
-int len_list(List *list);
+int get_safe_index(List *list, int index);
+element get_value(List *list, int index);
+int get_length(List *list);
 
 #endif /* linked_list_h */

@@ -10,3 +10,4 @@
 
 char *indexOut = "Index out of range.";
 char *nodeEmpty = "Node is empty.";
+char *listEmpty = "List is empty.";

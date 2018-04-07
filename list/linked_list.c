@@ -23,30 +23,15 @@ Node *create_node(element value, Node *next) {
 
 Node *find_node(List *list, int index) {
     if (isEmpty(list)) {
-        error(indexOut);
-        /* When length is 0 */
+        error(listEmpty);
     }
-
-    int length = len_list(list);
-    int wantedIndex = 0;
-
-    if (index < 0) {
-        if ((index * -1) > length)
-            error(indexOut);
-        wantedIndex = length + index;
-    }
-    else {
-        if (index > length - 1)
-            error(indexOut);
-        wantedIndex = index;
-    }
-    /* Check if index overs range */
-
+    
+    int safeIndex = get_safe_index(list, index);
     int currentIndex = 0;
     Node *currentNode = list->head;
     /* When length is 1 */
 
-    while (currentIndex < wantedIndex) {
+    while (currentIndex < safeIndex) {
             currentNode = currentNode->nextNode;
             currentIndex ++;
             if (currentNode == NULL)
@@ -96,6 +81,29 @@ void insert_list(List *list, int index, element value) {
     oldNode->nextNode = newNode;
 }
 
+element pop_list(List *list, int index) {
+    if (isEmpty(list))
+        error(listEmpty);
+    int value = 0;
+
+    if (index == 0) {
+        value = list->head->data;
+        free(list->head);
+        list->head = list->head->nextNode;
+        return value;
+    }
+    
+    Node *beforeNode = find_node(list, index - 1);
+    Node *currentNode = beforeNode->nextNode;
+    
+    beforeNode->nextNode = currentNode->nextNode;
+    value = currentNode->data;
+    free(currentNode);
+    return value;
+
+}
+
+
 void print_list(List *list) {
 	Node *currentNode = list->head;
 
@@ -117,13 +125,32 @@ int isEmpty(List *list) {
     return (list->head == NULL);
 }
 
+int get_safe_index(List *list, int index) {
+    int length = get_length(list);
+    int wantedIndex = 0;
+    
+    if (index < 0) {
+        if ((index * -1) > length)
+            error(indexOut);
+        wantedIndex = length + index;
+    }
+    else {
+        if (index > length - 1)
+            error(indexOut);
+        wantedIndex = index;
+    }
+    /* Check if index overs range */
+    
+    return wantedIndex;
+}
+
 int get_value(List *list, int index) {
     Node *node = find_node(list, index);
 
     return node->data;
 }
 
-int len_list(List *list) {
+int get_length(List *list) {
     if (isEmpty(list))
         return 0;
 

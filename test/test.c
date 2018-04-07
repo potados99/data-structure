@@ -11,5 +11,6 @@
 
 int main(int argc, char *argv[]) {
     //append_test();
-    get_test();
+    //get_value_test();
+    pop_test();
 }

@@ -15,6 +15,7 @@ void append_test() {
     init_list(&myList);
     
     int input = 0;
+    printf("append test\n");
     printf("input integer: ");
     scanf("%d", &input);
     while (input != -99) {
@@ -34,6 +35,7 @@ void insert_test() {
     init_list(&myList);
     
     int input = 0;
+    printf("insert test\n");
     printf("input integer: ");
     scanf("%d", &input);
     while (input != -99) {
@@ -47,12 +49,45 @@ void insert_test() {
     printf("\n");
 }
 
-void get_test() {
+void pop_test() {
     List myList;
     
     init_list(&myList);
     
     int val = 0;
+    printf("pop test\n");
+    printf("input integer: ");
+    scanf("%d", &val);
+    while (val != -99) {
+        append_list(&myList, val);
+        
+        printf("input integer: ");
+        scanf("%d", &val);
+    }
+    
+    print_list(&myList);
+    
+    int index = 0;
+    printf("input index: ");
+    scanf("%d", &index);
+    while (index != -99) {
+        printf("%d\n", pop_list(&myList, index));
+        print_list(&myList);
+
+        printf("input integer: ");
+        scanf("%d", &index);
+    }
+    
+    printf("\n");
+}
+
+void get_value_test() {
+    List myList;
+    
+    init_list(&myList);
+    
+    int val = 0;
+    printf("get_value test\n");
     printf("input integer: ");
     scanf("%d", &val);
     while (val != -99) {

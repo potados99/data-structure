@@ -13,5 +13,6 @@
 
 extern char *indexOut;
 extern char *nodeEmpty;
+extern char *listEmpty;
 
 #endif /* literal_h */
