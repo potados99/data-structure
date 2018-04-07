@@ -9,7 +9,10 @@
 #include <stdio.h>
 #include "linked_list_test.h"
 
-int main(int argc, char *argv[]) {
+int main(int argc, const char * argv[]) {
+    printf("Test for my implementations of data-structure.\n");
+    printf("Executing %s\n\n", argv[0]);
+
     //append_test();
     //get_value_test();
     //pop_test();
