@@ -84,23 +84,31 @@ void insert_list(List *list, int index, element value) {
 element pop_list(List *list, int index) {
     if (isEmpty(list))
         error(listEmpty);
+    
     int value = 0;
-
+    
     if (index == 0) {
+        Node *nextNode = list->head->nextNode;
+        
         value = list->head->data;
+        
         free(list->head);
-        list->head = list->head->nextNode;
+        list->head = NULL;
+        list->head = nextNode;
+        
         return value;
     }
     
     Node *beforeNode = find_node(list, index - 1);
     Node *currentNode = beforeNode->nextNode;
     
-    beforeNode->nextNode = currentNode->nextNode;
     value = currentNode->data;
+    beforeNode->nextNode = currentNode->nextNode;
+    
     free(currentNode);
+    currentNode = NULL;
+    
     return value;
-
 }
 
 
@@ -127,21 +135,20 @@ int isEmpty(List *list) {
 
 int get_safe_index(List *list, int index) {
     int length = get_length(list);
-    int wantedIndex = 0;
+    int safeIndex = 0;
     
     if (index < 0) {
         if ((index * -1) > length)
             error(indexOut);
-        wantedIndex = length + index;
+        safeIndex = length + index;
     }
     else {
         if (index > length - 1)
             error(indexOut);
-        wantedIndex = index;
+        safeIndex = index;
     }
-    /* Check if index overs range */
     
-    return wantedIndex;
+    return safeIndex;
 }
 
 int get_value(List *list, int index) {
