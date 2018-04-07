@@ -7,7 +7,7 @@
 //
 
 #include "linked_list_test.h"
-#include "linked_list.h"
+#include "../list/linked_list.h"
 
 void append_test() {
     List myList;

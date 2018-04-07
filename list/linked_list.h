@@ -15,7 +15,7 @@
 #define DATATYPE int
 
 
-#pragma mark - Struct
+#pragma mark - Structures
 
 typedef DATATYPE element;
 

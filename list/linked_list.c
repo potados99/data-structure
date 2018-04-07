@@ -7,8 +7,8 @@
 //
 
 #include "linked_list.h"
-#include "error.h"
-#include "literal.h"
+#include "../util/error.h"
+#include "../util/literal.h"
 
 
 #pragma mark - List methods
