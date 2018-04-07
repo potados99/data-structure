@@ -22,11 +22,11 @@ typedef DATATYPE element;
 typedef struct Node {
     element data;
     struct Node * nextNode;
-} Node;
+}Node;
 
 typedef struct List {
     Node * head;
-} List;
+}List;
 
 
 #pragma mark - Node functions
@@ -48,8 +48,8 @@ void print_list(List *list);
 #pragma mark - List functions
 
 int isEmpty(List *list);
+int get_length(List *list);
 int get_safe_index(List *list, int index);
 element get_value(List *list, int index);
-int get_length(List *list);
 
 #endif /* linked_list_h */

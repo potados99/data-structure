@@ -83,10 +83,10 @@ void insert_list(List *list, int index, element value) {
         return;
     }
     
-    Node *oldNode = find_node(list, index - 1);
-    Node *newNode = create_node(value, oldNode->nextNode);
+    Node *beforeNode = find_node(list, index - 1);
+    Node *newNode = create_node(value, beforeNode->nextNode);
 
-    oldNode->nextNode = newNode;
+    beforeNode->nextNode = newNode;
     return;
 }
 
@@ -94,12 +94,9 @@ element pop_list(List *list, int index) {
     if (isEmpty(list))
         error(listEmpty);
     
-    int value = 0;
-    
     if (index == 0) {
         Node *nextNode = list->head->nextNode;
-        
-        value = list->head->data;
+        int value = list->head->data;
         
         free(list->head);
         list->head = NULL;
@@ -110,8 +107,8 @@ element pop_list(List *list, int index) {
     
     Node *beforeNode = find_node(list, index - 1);
     Node *currentNode = beforeNode->nextNode;
+    int value = currentNode->data;
     
-    value = currentNode->data;
     beforeNode->nextNode = currentNode->nextNode;
     
     free(currentNode);
@@ -129,10 +126,12 @@ void print_list(List *list) {
 	Node *currentNode = list->head;
 
     printf("[");
+    
     while (currentNode->nextNode != NULL) {
         printf("%d, ", currentNode->data);
         currentNode = currentNode->nextNode;
     }
+    
     printf("%d", currentNode->data);
     printf("]\n");
     return;
@@ -143,6 +142,21 @@ void print_list(List *list) {
 
 int isEmpty(List *list) {
     return (list->head == NULL);
+}
+
+int get_length(List *list) {
+    if (isEmpty(list))
+        return 0;
+    
+    Node *currentNode = list->head;
+    int currentIndex = 1;
+    
+    while (currentNode->nextNode != NULL) {
+        currentNode = currentNode->nextNode;
+        currentIndex ++;
+    }
+    
+    return currentIndex;
 }
 
 int get_safe_index(List *list, int index) {
@@ -162,23 +176,8 @@ int get_safe_index(List *list, int index) {
     return safeIndex;
 }
 
-int get_value(List *list, int index) {
+element get_value(List *list, int index) {
     Node *node = find_node(list, index);
 
     return node->data;
-}
-
-int get_length(List *list) {
-    if (isEmpty(list))
-        return 0;
-
-    Node *currentNode = list->head;
-    int currentIndex = 1;
-
-    while (currentNode->nextNode != NULL) {
-        currentNode = currentNode->nextNode;
-        currentIndex ++;
-    }
-
-    return currentIndex;
 }
