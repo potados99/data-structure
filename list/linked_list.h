@@ -15,7 +15,7 @@
 #define DATATYPE int
 
 
-#pragma mark - Structures
+#pragma mark - Struct
 
 typedef DATATYPE element;
 
@@ -27,13 +27,6 @@ typedef struct Node {
 typedef struct List {
     Node * head;
 }List;
-
-
-#pragma mark - Node functions
-
-Node *create_node(element value, Node *next);
-Node *find_node(List *list, int index);
-Node *find_last_node(List *list);
 
 
 #pragma mark - List methods
@@ -51,5 +44,13 @@ int isEmpty(List *list);
 int get_length(List *list);
 int get_safe_index(List *list, int index);
 element get_value(List *list, int index);
+
+
+#pragma mark - Node functions
+
+Node *create_node(element value, Node *next);
+Node *find_node(List *list, int index);
+Node *find_last_node(List *list);
+
 
 #endif /* linked_list_h */

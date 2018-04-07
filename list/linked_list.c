@@ -10,49 +10,6 @@
 #include "error.h"
 #include "literal.h"
 
-#pragma mark - Node functions
-
-Node *create_node(element value, Node *next) {
-    Node *newNode = (Node *)malloc(sizeof(Node));
-
-    newNode->data = value;
-    newNode->nextNode = next;
-
-    return newNode;
-}
-
-Node *find_node(List *list, int index) {
-    if (isEmpty(list))
-        error(listEmpty);
-    
-    Node *currentNode = list->head;
-    int currentIndex = 0;
-    int safeIndex = get_safe_index(list, index);
-
-    while (currentIndex < safeIndex) {
-            currentNode = currentNode->nextNode;
-            currentIndex ++;
-            if (currentNode == NULL)
-                error(nodeEmpty);
-    }
-
-    return currentNode;
-}
-
-Node *find_last_node(List *list) {
-    if (isEmpty(list))
-        error(indexOut);
-    
-	Node *currentNode = (Node *)malloc(sizeof(Node));
-
-    currentNode = list->head;
-
-    while (currentNode->nextNode != NULL)
-        currentNode = currentNode->nextNode;
-
-    return currentNode;
-}
-
 
 #pragma mark - List methods
 
@@ -83,7 +40,8 @@ void insert_list(List *list, int index, element value) {
         return;
     }
     
-    Node *beforeNode = find_node(list, index - 1);
+    int safeIndex = get_safe_index(list, index);
+    Node *beforeNode = find_node(list, safeIndex - 1);
     Node *newNode = create_node(value, beforeNode->nextNode);
 
     beforeNode->nextNode = newNode;
@@ -126,14 +84,13 @@ void print_list(List *list) {
 	Node *currentNode = list->head;
 
     printf("[");
-    
+
     while (currentNode->nextNode != NULL) {
         printf("%d, ", currentNode->data);
         currentNode = currentNode->nextNode;
     }
     
-    printf("%d", currentNode->data);
-    printf("]\n");
+    printf("%d]\n", currentNode->data);
     return;
 }
 
@@ -180,4 +137,48 @@ element get_value(List *list, int index) {
     Node *node = find_node(list, index);
 
     return node->data;
+}
+
+
+#pragma mark - Node functions
+
+Node *create_node(element value, Node *next) {
+    Node *newNode = (Node *)malloc(sizeof(Node));
+    
+    newNode->data = value;
+    newNode->nextNode = next;
+    
+    return newNode;
+}
+
+Node *find_node(List *list, int index) {
+    if (isEmpty(list))
+        error(listEmpty);
+    
+    Node *currentNode = list->head;
+    int currentIndex = 0;
+    int safeIndex = get_safe_index(list, index);
+    
+    while (currentIndex < safeIndex) {
+        currentNode = currentNode->nextNode;
+        currentIndex ++;
+        if (currentNode == NULL)
+            error(nodeEmpty);
+    }
+    
+    return currentNode;
+}
+
+Node *find_last_node(List *list) {
+    if (isEmpty(list))
+        error(indexOut);
+    
+    Node *currentNode = (Node *)malloc(sizeof(Node));
+    
+    currentNode = list->head;
+    
+    while (currentNode->nextNode != NULL)
+        currentNode = currentNode->nextNode;
+    
+    return currentNode;
 }
