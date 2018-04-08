@@ -31,7 +31,7 @@ void append_list(List *list, element value) {
     return;
 }
 
-void insert_list(List *list, int index, element value) {
+void insert_list(List *list, const int index, element value) {
     if (isEmpty(list))
         error(listEmpty);
     
@@ -40,7 +40,7 @@ void insert_list(List *list, int index, element value) {
         return;
     }
     
-    int safeIndex = get_safe_index(list, index);
+    unsigned const int safeIndex = get_safe_index(list, index);
     Node *beforeNode = find_node(list, safeIndex - 1);
     Node *newNode = create_node(value, beforeNode->nextNode);
 
@@ -48,13 +48,13 @@ void insert_list(List *list, int index, element value) {
     return;
 }
 
-element pop_list(List *list, int index) {
+element pop_list(List *list, const int index) {
     if (isEmpty(list))
         error(listEmpty);
     
     if (index == 0) {
         Node *nextNode = list->head->nextNode;
-        int value = list->head->data;
+        const int value = list->head->data;
         
         free(list->head);
         list->head = NULL;
@@ -65,7 +65,7 @@ element pop_list(List *list, int index) {
     
     Node *beforeNode = find_node(list, index - 1);
     Node *currentNode = beforeNode->nextNode;
-    int value = currentNode->data;
+    const int value = currentNode->data;
     
     beforeNode->nextNode = currentNode->nextNode;
     
@@ -106,7 +106,7 @@ int get_length(List *list) {
         return 0;
     
     Node *currentNode = list->head;
-    int currentIndex = 1;
+    register unsigned int currentIndex = 1;
     
     while (currentNode->nextNode != NULL) {
         currentNode = currentNode->nextNode;
@@ -116,9 +116,9 @@ int get_length(List *list) {
     return currentIndex;
 }
 
-int get_safe_index(List *list, int index) {
-    int length = get_length(list);
-    int safeIndex = 0;
+int get_safe_index(List *list, const int index) {
+    unsigned const int length = get_length(list);
+    unsigned int safeIndex = 0;
     
     if (index < 0) {
         if ((index * -1) > length)
@@ -156,12 +156,12 @@ Node *find_node(List *list, int index) {
         error(listEmpty);
     
     Node *currentNode = list->head;
-    int currentIndex = 0;
-    int safeIndex = get_safe_index(list, index);
     
-    while (currentIndex < safeIndex) {
+    unsigned const int safeIndex = get_safe_index(list, index);
+    register unsigned int i = 0;
+
+    for (i = safeIndex; i != 0; i --) {
         currentNode = currentNode->nextNode;
-        currentIndex ++;
         if (currentNode == NULL)
             error(nodeEmpty);
     }

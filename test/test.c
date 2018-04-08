@@ -16,5 +16,6 @@ int main(int argc, const char * argv[]) {
     //append_test();
     //get_value_test();
     //pop_test();
-    insert_test();
+    //insert_test();
+    append_speed_test();
 }

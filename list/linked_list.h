@@ -33,8 +33,8 @@ typedef struct List {
 
 void init_list(List *list);
 void append_list(List *list, element value);
-void insert_list(List *list, int index, element value);
-element pop_list(List *list, int index);
+void insert_list(List *list, const int index, element value);
+element pop_list(List *list, const int index);
 void print_list(List *list);
 
 
@@ -42,14 +42,14 @@ void print_list(List *list);
 
 int isEmpty(List *list);
 int get_length(List *list);
-int get_safe_index(List *list, int index);
-element get_value(List *list, int index);
+int get_safe_index(List *list, const int index);
+element get_value(List *list, const int index);
 
 
 #pragma mark - Node functions
 
 Node *create_node(element value, Node *next);
-Node *find_node(List *list, int index);
+Node *find_node(List *list, const int index);
 Node *find_last_node(List *list);
 
 
