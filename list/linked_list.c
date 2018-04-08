@@ -40,7 +40,7 @@ void insert_list(List *list, int index, element value) {
         return;
     }
     
-    int safeIndex = get_safe_index(list, index);
+    unsigned int safeIndex = get_safe_index(list, index);
     Node *beforeNode = find_node(list, safeIndex - 1);
     Node *newNode = create_node(value, beforeNode->nextNode);
 
@@ -106,7 +106,7 @@ int get_length(List *list) {
         return 0;
     
     Node *currentNode = list->head;
-    int currentIndex = 1;
+    register unsigned int currentIndex = 1;
     
     while (currentNode->nextNode != NULL) {
         currentNode = currentNode->nextNode;
@@ -117,8 +117,8 @@ int get_length(List *list) {
 }
 
 int get_safe_index(List *list, int index) {
-    int length = get_length(list);
-    int safeIndex = 0;
+    unsigned int length = get_length(list);
+    unsigned int safeIndex = 0;
     
     if (index < 0) {
         if ((index * -1) > length)
@@ -156,12 +156,12 @@ Node *find_node(List *list, int index) {
         error(listEmpty);
     
     Node *currentNode = list->head;
-    int currentIndex = 0;
-    int safeIndex = get_safe_index(list, index);
     
-    while (currentIndex < safeIndex) {
+    unsigned int safeIndex = get_safe_index(list, index);
+    register unsigned int i = 0;
+
+    for (i = safeIndex; i != 0; i --) {
         currentNode = currentNode->nextNode;
-        currentIndex ++;
         if (currentNode == NULL)
             error(nodeEmpty);
     }
