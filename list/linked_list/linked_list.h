@@ -14,6 +14,10 @@
 
 #define DATATYPE int
 
+#define INDEX_OUT "Index out of range."
+#define NODE_EMPTY "Node is empty."
+#define LIST_EMPTY "List is empty."
+
 
 #pragma mark - Structures
 
@@ -51,6 +55,11 @@ element get_value(List *list, const int index);
 Node *create_node(element value, Node *next);
 Node *find_node(List *list, const int index);
 Node *find_last_node(List *list);
+
+
+#pragma mark - Utils
+
+void error(char *mes);
 
 
 #endif /* linked_list_h */

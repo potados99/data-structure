@@ -21,13 +21,8 @@ void init_list(List *list);
 
 void append_list(List *list, int element);
 
-/*
 void extend_list(List *list1, List *list2);
 
-
-void sort_list(List *list);
-
 void print_list(List *list);
-*/
 
 #endif /* array_list_h */

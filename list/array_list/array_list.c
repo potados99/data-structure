@@ -18,30 +18,15 @@ void append_list(List *list, const int element) {
     list->dataSet[list->size ++] = element;
 }
 
-/*
-
-List extend_list(List *list1, List *list2) {
-    List *list;
-    init_list(list);
-    
+void extend_list(List *list1, List *list2) {
     int i = 0;
-    for (i = 0; i <= list1.size - 1; i ++) {
-        list = append_list(list, list1.dataSet[i]);
+    for (i = 0; i <= list2->size - 1; i ++) {
+        append_list(list1, list2->dataSet[i]);
     }
-    for (i = 0; i <= list2.size - 1; i ++) {
-        list = append_list(list, list2.dataSet[i]);
-    }
-    
-    return list;
 }
 
-
-void sort_array(List *list){
-    quickSort(list->dataSet, 0, list->size - 1);
-}
-
-void print_list(List list) {
-    printf("{");
+void print_list(List *list) {
+    printf("[");
     int i = 0;
     for (i = 0; i <= list->size - 1; i ++) {
         if (i == list->size - 1) {
@@ -50,7 +35,6 @@ void print_list(List list) {
             printf("%d, ", list->dataSet[i]);
         }
     }
-    printf("}");
+    printf("]");
 }
 
-*/

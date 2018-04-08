@@ -7,8 +7,6 @@
 //
 
 #include "linked_list.h"
-#include "../util/error.h"
-#include "../util/literal.h"
 
 
 #pragma mark - List methods
@@ -33,7 +31,7 @@ void append_list(List *list, element value) {
 
 void insert_list(List *list, const int index, element value) {
     if (isEmpty(list))
-        error(listEmpty);
+        error(LIST_EMPTY);
     
     if (index == 0) {
         list->head = create_node(value, list->head);
@@ -50,7 +48,7 @@ void insert_list(List *list, const int index, element value) {
 
 element pop_list(List *list, const int index) {
     if (isEmpty(list))
-        error(listEmpty);
+        error(LIST_EMPTY);
     
     if (index == 0) {
         Node *nextNode = list->head->nextNode;
@@ -122,11 +120,11 @@ int get_safe_index(List *list, const int index) {
     
     if (index < 0) {
         if ((index * -1) > length)
-            error(indexOut);
+            error(INDEX_OUT);
         safeIndex = length + index;
     } else {
         if (index > length - 1)
-            error(indexOut);
+            error(INDEX_OUT);
         safeIndex = index;
     }
     
@@ -153,7 +151,7 @@ Node *create_node(element value, Node *next) {
 
 Node *find_node(List *list, int index) {
     if (isEmpty(list))
-        error(listEmpty);
+        error(LIST_EMPTY);
     
     Node *currentNode = list->head;
     
@@ -163,7 +161,7 @@ Node *find_node(List *list, int index) {
     for (i = safeIndex; i != 0; i --) {
         currentNode = currentNode->nextNode;
         if (currentNode == NULL)
-            error(nodeEmpty);
+            error(NODE_EMPTY);
     }
     
     return currentNode;
@@ -171,7 +169,7 @@ Node *find_node(List *list, int index) {
 
 Node *find_last_node(List *list) {
     if (isEmpty(list))
-        error(indexOut);
+        error(INDEX_OUT);
     
     Node *currentNode = (Node *)malloc(sizeof(Node));
     
@@ -181,4 +179,12 @@ Node *find_last_node(List *list) {
         currentNode = currentNode->nextNode;
     
     return currentNode;
+}
+
+
+#pragma mark - Utils
+
+void error(char *mes) {
+    fprintf(stderr, "%s\n", mes);
+    exit(1);
 }
