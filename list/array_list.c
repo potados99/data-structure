@@ -1,102 +1,56 @@
 //
 //  array_list.c
-//  Set_calculation
+//  data-structure
 //
 //  Created by potados on 2018. 3. 25..
 //  Copyright © 2018 potads. All rights reserved.
 //
 
 #include "array_list.h"
-#include "util.h"
-#include "locale.h"
 
-Arr init_array(int size) {
-    Arr Array;
-    Array.size = size;
-    Array.array = (int*) malloc(sizeof(int)*size);
-
-    return Array;
+void init_list(List *list) {
+    list->size = 0;
+    list->dataSet = (int*) malloc(sizeof(int)*0);
 }
 
-Arr append_array(Arr Array, int element) {
-    Array.array = (int*) realloc(Array.array, sizeof(int)*(Array.size + 1));
-    Array.array[Array.size ++] = element;
-    
-    return Array;
+void append_list(List *list, const int element) {
+    list->dataSet = (int*) realloc(list->dataSet, sizeof(int)*(list->size + 1));
+    list->dataSet[list->size ++] = element;
 }
 
-Arr copy_array(Arr Array) {
-    Arr Array_copy;
-    Array_copy = init_array(0);
+/*
+
+List extend_list(List *list1, List *list2) {
+    List *list;
+    init_list(list);
     
     int i = 0;
-    for (i = 0; i <= Array.size - 1; i ++) {
-        Array_copy = append_array(Array_copy, Array.array[i]);
+    for (i = 0; i <= list1.size - 1; i ++) {
+        list = append_list(list, list1.dataSet[i]);
+    }
+    for (i = 0; i <= list2.size - 1; i ++) {
+        list = append_list(list, list2.dataSet[i]);
     }
     
-    return Array_copy;
+    return list;
 }
 
-Arr extend_array(Arr Array1, Arr Array2) {
-    Arr Array;
-    Array = init_array(0);
-    
-    int i = 0;
-    for (i = 0; i <= Array1.size - 1; i ++) {
-        Array = append_array(Array, Array1.array[i]);
-    }
-    for (i = 0; i <= Array2.size - 1; i ++) {
-        Array = append_array(Array, Array2.array[i]);
-    }
-    
-    return Array;
+
+void sort_array(List *list){
+    quickSort(list->dataSet, 0, list->size - 1);
 }
 
-Arr user_input_array() {
-    Arr Array;
-    Array = init_array(0);
-    char currentInput[100];
-    
-    printf(inputIntegerForIndex_d[language], Array.size);
-    fgets(currentInput, 99, stdin);
-    currentInput[strlen(currentInput) - 1] = '\0';
-    
-    while (currentInput[0]) {
-
-        if (check_length_over(currentInput, 9)){
-            printf("%s", inputTooLong[language]);
-        }
-        else if (check_not_int(currentInput)) {
-            printf("%s", inputInteger[language]);
-        }
-        else if (check_that_exists(Array, atoi(currentInput))) {
-            printf(d_alreadyExists[language], atoi(currentInput));
-        }
-        else {
-            Array = append_array(Array, atoi(currentInput));
-        }
-        
-        printf(inputIntegerForIndex_d[language], Array.size);
-        fgets(currentInput, 99, stdin);
-        currentInput[strlen(currentInput) - 1] = '\0';
-    }
-    
-    return Array;
-}
-
-void sort_array(Arr Array){
-    quickSort(Array.array, 0, Array.size - 1);
-}
-
-void print_array(Arr Array) {
+void print_list(List list) {
     printf("{");
     int i = 0;
-    for (i = 0; i <= Array.size - 1; i ++) {
-        if (i == Array.size - 1) {
-            printf("%d", Array.array[i]);
+    for (i = 0; i <= list->size - 1; i ++) {
+        if (i == list->size - 1) {
+            printf("%d", list->dataSet[i]);
         } else {
-            printf("%d, ", Array.array[i]);
+            printf("%d, ", list->dataSet[i]);
         }
     }
     printf("}");
 }
+
+*/

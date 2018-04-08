@@ -1,6 +1,6 @@
 //
 //  array_list.h
-//  Set_calculation
+//  data-structure
 //
 //  Created by potados on 2018. 3. 25..
 //  Copyright © 2018 potados. All rights reserved.
@@ -11,20 +11,23 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "datatype.h"
 
-Arr init_array(int size);
+typedef struct List {
+    int *dataSet;
+    int size;
+} List;
 
-Arr append_array(Arr Array, int element);
+void init_list(List *list);
 
-Arr copy_array(Arr Array);
+void append_list(List *list, int element);
 
-Arr extend_array(Arr Array1, Arr Array2);
+/*
+void extend_list(List *list1, List *list2);
 
-Arr user_input_array(void);
 
-void sort_array(Arr Array);
+void sort_list(List *list);
 
-void print_array(Arr Array);
+void print_list(List *list);
+*/
 
 #endif /* array_list_h */
