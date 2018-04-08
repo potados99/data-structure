@@ -8,6 +8,7 @@
 
 #include "linked_list_test.h"
 #include "../list/linked_list.h"
+#include <time.h>
 
 void append_test() {
     List myList;
@@ -124,5 +125,31 @@ void get_value_test() {
     }
     
     printf("\n");
+}
+
+void append_speed_test() {
+    List myList;
+    init_list(&myList);
+    
+    time_t startTime;
+    time_t endTime;
+    float time = 0;
+    
+    append_list(&myList, 1);
+    append_list(&myList, 2);
+    append_list(&myList, 3);
+    append_list(&myList, 4);
+
+    register unsigned int i = 0;
+    startTime = clock();
+    for (i = 100000; i != 0; i --) {
+        insert_list(&myList, 0, 3);
+        //append_list(&myList, 1);
+
+    }
+    endTime = clock();
+    
+    time = (float)(endTime - startTime)/(CLOCKS_PER_SEC);
+    printf("%f secs\n", time);
 }
 
