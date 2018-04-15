@@ -11,17 +11,16 @@
 #include "array_list.h"
 
 void append_test(void);
+void extend_test(void);
 //void insert_test(void);
 //void pop_test(void);
-//void get_value_test(void);
 void append_speed_test(void);
 
 int main(int argc, const char * argv[]) {
     printf("Demo of array list.\n");
     
-    //append_test();
-    //get_value_test();
-    //pop_test();
+    append_test();
+    extend_test();   //pop_test();
     //insert_test();
     append_speed_test();
 }
@@ -43,6 +42,44 @@ void append_test() {
     
     print_list(&myList);
     printf("\n");
+}
+
+void extend_test() {
+    List myList1;
+    init_list(&myList1);
+    
+    List myList2;
+    init_list(&myList2);
+    
+    int input = 0;
+    printf("extend test - list1\n");
+    printf("input integer: ");
+    scanf("%d", &input);
+    while (input != -99) {
+        append_list(&myList1, input);
+        
+        printf("input integer: ");
+        scanf("%d", &input);
+    }
+    
+    printf("\n");
+    
+    input = 0;
+    printf("extend test - list2\n");
+    printf("input integer: ");
+    scanf("%d", &input);
+    while (input != -99) {
+        append_list(&myList1, input);
+        
+        printf("input integer: ");
+        scanf("%d", &input);
+    }
+    
+    extend_list(&myList1, &myList2);
+    
+    print_list(&myList1);
+    printf("\n");
+    
 }
 
 /*
@@ -109,38 +146,8 @@ void pop_test() {
     
     printf("\n");
 }
-
-void get_value_test() {
-    List myList;
-    init_list(&myList);
-    
-    int val = 0;
-    printf("get_value test\n");
-    printf("input integer: ");
-    scanf("%d", &val);
-    while (val != -99) {
-        append_list(&myList, val);
-        
-        printf("input integer: ");
-        scanf("%d", &val);
-    }
-    
-    print_list(&myList);
-    
-    int index = 0;
-    printf("input index: ");
-    scanf("%d", &index);
-    while (index != -99) {
-        printf("%d\n", get_value(&myList, index));
-        
-        printf("input integer: ");
-        scanf("%d", &index);
-    }
-    
-    printf("\n");
-}
 */
- 
+
 void append_speed_test() {
     List myList;
     init_list(&myList);
@@ -164,6 +171,6 @@ void append_speed_test() {
     endTime = clock();
     
     time = (float)(endTime - startTime)/(CLOCKS_PER_SEC);
-    printf("%f secs\n", time);
+    printf("Appended 100,004 items in %f secs\n", time);
 }
 
