@@ -72,6 +72,23 @@ element pop_list(List *list, const int index) {
     return value;
 }
 
+void reverse_list(List *list) {
+    Node *p = list->head;
+    Node *q = p->nextNode;
+    Node *r = q->nextNode;
+    
+    p->nextNode = NULL;
+    
+    while (r != NULL) {
+        q->nextNode = p;
+        p = q;
+        q = r;
+        r = r->nextNode;
+    }
+    q->nextNode = p;
+    list->head = q;
+}
+
 void print_list(List *list) {
     if (isEmpty(list)) {
         printf("[]\n");

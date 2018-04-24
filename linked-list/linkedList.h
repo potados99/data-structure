@@ -39,6 +39,7 @@ void init_list(List *list);
 void append_list(List *list, element value);
 void insert_list(List *list, const int index, element value);
 element pop_list(List *list, const int index);
+void reverse_list(List *list);
 void print_list(List *list);
 
 

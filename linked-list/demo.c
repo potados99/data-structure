@@ -18,11 +18,11 @@ void append_speed_test(void);
 int main(int argc, const char * argv[]) {
     printf("Demo of linked list.\n");
     
-    //append_test();
+    append_test();
     //get_value_test();
     //pop_test();
     //insert_test();
-    append_speed_test();
+    //append_speed_test();
 }
 
 void append_test() {
@@ -42,6 +42,9 @@ void append_test() {
     
     print_list(&myList);
     printf("\n");
+    reverse_list(&myList);
+    print_list(&myList);
+
 }
 
 void insert_test() {
