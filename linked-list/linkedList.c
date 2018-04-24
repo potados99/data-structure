@@ -5,7 +5,7 @@
 //  Copyright © 2018 potados. All rights reserved.
 //
 
-#include "linked_list.h"
+#include "linkedList.h"
 
 
 #pragma mark - List methods
