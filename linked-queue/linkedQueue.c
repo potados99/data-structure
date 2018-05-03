@@ -30,7 +30,7 @@ int Queue_isEmpty(Queue self) {
 }
 
 void Queue_enqueue(Queue self, element data) {
-    Node node = newNode(data, NULL);
+    QueueNode node = newNode(data, NULL);
     if (self->isEmpty(self)) {
         self->front = node;
         self->rear = node;
@@ -45,7 +45,7 @@ element Queue_dequeue(Queue self) {
     if (self->isEmpty(self))
         error("Queue is empty\n");
     
-    Node node = self->front;
+    QueueNode node = self->front;
     int data = node->data;
     
     if (node->link == NULL)
@@ -57,8 +57,8 @@ element Queue_dequeue(Queue self) {
     return data;
 }
 
-Node newNode(element data, Node link) {
-    Node node = (Node)malloc(sizeof(_Node));
+QueueNode newNode(element data, QueueNode link) {
+    QueueNode node = (QueueNode)malloc(sizeof(_QueueNode));
     node->data = data;
     node->link = link;
     return node;

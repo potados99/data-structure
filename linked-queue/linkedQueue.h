@@ -14,16 +14,16 @@
 
 typedef int element;
 
-typedef struct _Node {
+typedef struct _QueueNode {
     element data;
-    struct _Node *link;
+    struct _QueueNode *link;
     
-} _Node;
-typedef _Node* Node;
+} _QueueNode;
+typedef _QueueNode* QueueNode;
 
 typedef struct _Queue {
-    Node front;
-    Node rear;
+    QueueNode front;
+    QueueNode rear;
     
     void (*init)(struct _Queue *);
     int (*isEmpty)(struct _Queue *);
@@ -40,7 +40,7 @@ int Queue_isEmpty(Queue self);
 void Queue_enqueue(Queue self, element data);
 element Queue_dequeue(Queue self);
 
-Node newNode(element data, Node link);
+QueueNode newNode(element data, QueueNode link);
 void error(char *message);
 
 #endif /* linkedQueue_h */
