@@ -10,8 +10,12 @@
 
 Queue new_Queue(void) {
     Queue newQueue = (Queue)malloc(sizeof(_Queue));
+    if (newQueue == NULL)
+        error("memmory allocation failed");
+    
     newQueue->init = Queue_init;
     newQueue->init(newQueue);
+    
     return newQueue;
 }
 
@@ -29,8 +33,9 @@ int Queue_isEmpty(Queue self) {
     return ((self->front == NULL) || (self->rear == NULL));
 }
 
-void Queue_enqueue(Queue self, element data) {
+void Queue_enqueue(Queue self, queueElement data) {
     QueueNode node = newNode(data, NULL);
+    
     if (self->isEmpty(self)) {
         self->front = node;
         self->rear = node;
@@ -41,12 +46,12 @@ void Queue_enqueue(Queue self, element data) {
     }
 }
 
-element Queue_dequeue(Queue self) {
+queueElement Queue_dequeue(Queue self) {
     if (self->isEmpty(self))
-        error("Queue is empty\n");
-    
+        error("Queue is empty.\n");
+
     QueueNode node = self->front;
-    int data = node->data;
+    queueElement data = node->data;
     
     if (node->link == NULL)
         self->rear = NULL;
@@ -57,10 +62,14 @@ element Queue_dequeue(Queue self) {
     return data;
 }
 
-QueueNode newNode(element data, QueueNode link) {
+QueueNode newNode(queueElement data, QueueNode link) {
     QueueNode node = (QueueNode)malloc(sizeof(_QueueNode));
+    if (node == NULL)
+        error("memmory allocation failed");
+    
     node->data = data;
     node->link = link;
+    
     return node;
 }
 
