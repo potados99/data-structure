@@ -3,7 +3,7 @@
 //  linked-stack
 //
 //  Created by POTADOS on 2018. 6. 10..
-//  Copyright © 2018년 POTADOS. All rights reserved.
+//  Copyright © 2018 POTADOS. All rights reserved.
 //
 
 #ifndef linkedStack_h
@@ -31,10 +31,14 @@ Stack new_Stack(void);
 
 void Stack_push(Stack self, StackElement data);
 StackElement Stack_pop(Stack self);
+int Stack_size(Stack self);
 
 StackNode newNode(StackElement data, StackNode link);
-void error(char *message);
-
-
 
 #endif /* linkedStack_h */
+
+//
+//  Author
+//  ID: 201701562
+//  Name: Byeong Jun Song
+//

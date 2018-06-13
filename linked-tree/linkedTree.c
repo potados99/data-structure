@@ -25,6 +25,7 @@ void TreeNode_init(TreeNode self, treeElement Key, TreeNode left, TreeNode right
     self->right = right;
     
     self->setKey = TreeNode_setKey;
+    self->getKey = TreeNode_getKey;
     self->setChild = TreeNode_setChild;
     self->preorder = TreeNode_preorder;
     self->inorder = TreeNode_inorder;
@@ -39,6 +40,10 @@ void TreeNode_setKey(TreeNode self, treeElement key) {
     self->data = key;
 }
 
+treeElement TreeNode_getKey(TreeNode self) {
+    return self->data;
+}
+
 void TreeNode_setChild(TreeNode self, TreeNode left, TreeNode right) {
     self->left = left;
     self->right = right;
@@ -46,7 +51,7 @@ void TreeNode_setChild(TreeNode self, TreeNode left, TreeNode right) {
 
 void TreeNode_preorder(TreeNode self) {
     if (self) {
-        printf("%d ", self->data);
+        printf("%d ", self->getKey(self));
         TreeNode_preorder(self->left);
         TreeNode_preorder(self->right);
     }
@@ -55,7 +60,7 @@ void TreeNode_preorder(TreeNode self) {
 void TreeNode_inorder(TreeNode self) {
     if (self) {
         TreeNode_inorder(self->left);
-        printf("%d ", self->data);
+        printf("%d ", self->getKey(self));
         TreeNode_inorder(self->right);
     }
 }
@@ -64,7 +69,7 @@ void TreeNode_postorder(TreeNode self) {
     if (self) {
         TreeNode_postorder(self->left);
         TreeNode_postorder(self->right);
-        printf("%d ", self->data);
+        printf("%d ", self->getKey(self));
     }
 }
 
@@ -77,7 +82,7 @@ void TreeNode_levelorder(TreeNode self) {
     
     while (! myQueue->isEmpty(myQueue)) {
         TreeNode node = (TreeNode)myQueue->dequeue(myQueue);
-        printf("%d ", node->data);
+        printf("%d ", node->getKey(node));
         
         if (node->left)
             myQueue->enqueue(myQueue, node->left);
@@ -92,9 +97,9 @@ TreeNode TreeNode_search(TreeNode self, treeElement key) {
     if (self == NULL)
         return NULL;
     
-    if (key == self->data)
+    if (key == self->getKey(self))
         return self;
-    else if (key < self->data)
+    else if (key < self->getKey(self))
         return TreeNode_search(self->left, key);
     else
         return TreeNode_search(self->right, key);
@@ -108,11 +113,11 @@ void TreeNode_insert(TreeNode self, treeElement key) {
     int isChildOfLeft = 0;
     
     while (currentNode != NULL) {
-        if (key == currentNode->data) return;
+        if (key == currentNode->getKey(currentNode)) return;
         
         parentNode = currentNode;
         
-        if (key < currentNode->data) {
+        if (key < currentNode->getKey(currentNode)) {
             currentNode = currentNode->left;
             isChildOfLeft = 1;
         } else {
@@ -139,11 +144,11 @@ void TreeNode_remove(TreeNode self, treeElement key) {
     TreeNode parentNode = NULL;
     int isChildOfLeft = 0;
 
-    while (key != currentNode->data) {
+    while (key != currentNode->getKey(currentNode)) {
         if (currentNode == NULL) return; /* not found */
         
         parentNode = currentNode;
-        if (key < currentNode->data) {
+        if (key < currentNode->getKey(currentNode)) {
             currentNode = currentNode->left;
             isChildOfLeft = 1;
         } else {
@@ -154,6 +159,7 @@ void TreeNode_remove(TreeNode self, treeElement key) {
     
     /* Case 1: current node has no child node */
     if ((! currentNode->left) && (! currentNode->right)) {
+        
         if (parentNode) {
             if (isChildOfLeft)
                 parentNode->left = NULL;
@@ -165,7 +171,7 @@ void TreeNode_remove(TreeNode self, treeElement key) {
     }
     
     /* Case 2: current node has one child node */
-    else if ((currentNode->left) || (currentNode->right)) {
+    else if ((! currentNode->left) || (! currentNode->right)) {
         TreeNode childNode = (currentNode->left) ? currentNode->left:currentNode->right;
         
         if (parentNode) {
@@ -180,31 +186,22 @@ void TreeNode_remove(TreeNode self, treeElement key) {
     
     /* Case 3: current node has two child nodes */
     else if ((currentNode->left) && (currentNode->right)) {
-        TreeNode successionLeftParent = currentNode;
-        TreeNode successionRightParent = currentNode;
-        TreeNode succession = NULL;
+        TreeNode successionParent = currentNode;
+        TreeNode succession = currentNode->right;
         
-        while ((successionLeftParent->right->right = successionLeftParent->right->right->right) != NULL);
-        while ((successionRightParent->left->left = successionRightParent->left->left->left) != NULL);
-        
-        int leftIsClose = ((key - successionLeftParent->right->data) < (successionRightParent->left->data - key));
-        succession = leftIsClose ? successionLeftParent->right:successionRightParent->left;
-        
-        if (leftIsClose) {
-            succession = successionLeftParent->right;
-            successionLeftParent->right = NULL; /* remove connection */
+        while (succession->left != NULL) { /* find succession and its parent */
+            successionParent = succession;
+            succession = succession->left;
         }
-        else {
-            succession = successionRightParent->left;
-            successionRightParent->left = NULL;
-        }
-        
-        if (isChildOfLeft)
-            parentNode->left = succession;
+
+        if (successionParent == currentNode)
+            successionParent->right = NULL;
         else
-            parentNode->right = succession;
+            successionParent->left = NULL;
+        
+        currentNode->setKey(currentNode, succession->getKey(succession));
+        currentNode = succession;
     }
-    
     else
         exit(-1);
     

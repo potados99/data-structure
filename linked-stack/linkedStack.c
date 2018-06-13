@@ -3,7 +3,7 @@
 //  linked-stack
 //
 //  Created by POTADOS on 2018. 6. 10..
-//  Copyright © 2018년 POTADOS. All rights reserved.
+//  Copyright © 2018 POTADOS. All rights reserved.
 //
 
 #include "linkedStack.h"
@@ -22,7 +22,8 @@ void Stack_push(Stack self, StackElement data) {
 
 StackElement Stack_pop(Stack self) {
     if (! self->top) {
-        error("Stack empty.\n");
+        fprintf(stderr, "Stack is empty.\n");
+        exit(1);
     }
     StackNode willBePoped = self->top;
     StackElement value = self->top->data;
@@ -32,7 +33,18 @@ StackElement Stack_pop(Stack self) {
     return value;
 }
 
-
+int Stack_size(Stack self) {
+    if (! self->top)
+        return 0;
+    
+    int count = 1;
+    StackNode currentNode = self->top;
+    while (currentNode->link) {
+        currentNode = currentNode->link;
+        count += 1;
+    }
+    return count;
+}
 
 StackNode newNode(StackElement data, StackNode link) {
     StackNode newNode = (StackNode)malloc(sizeof(_StackNode));
@@ -43,6 +55,8 @@ StackNode newNode(StackElement data, StackNode link) {
     return newNode;
 }
 
-void error(char *message) {
-    
-}
+//
+//  Author
+//  ID: 201701562
+//  Name: Byeong Jun Song
+//

@@ -25,6 +25,7 @@ typedef struct _TreeNode {
     
     void (*init)(struct _TreeNode *, treeElement, struct _TreeNode *, struct _TreeNode *);
     void (*setKey)(struct _TreeNode *, treeElement);
+    treeElement (*getKey)(struct _TreeNode *);
     void (*setChild)(struct _TreeNode *, struct _TreeNode *, struct _TreeNode *);
     void (*preorder)(struct _TreeNode *);
     void (*inorder)(struct _TreeNode *);
@@ -40,6 +41,7 @@ typedef _TreeNode* TreeNode;
 TreeNode new_TreeNode(treeElement Key, TreeNode left, TreeNode right);
 void TreeNode_init(TreeNode self, treeElement key, TreeNode left, TreeNode right);
 void TreeNode_setKey(TreeNode self, treeElement key);
+treeElement TreeNode_getKey(TreeNode self);
 void TreeNode_setChild(TreeNode self, TreeNode left, TreeNode right);
 void TreeNode_preorder(TreeNode self);
 void TreeNode_inorder(TreeNode self);
